@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import {  useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
@@ -16,6 +16,8 @@ import { useMutation } from '@tanstack/react-query'
 import { loginApi } from '../api'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { setToken } from '../slices/authSlice'
 
 type IFormInputs = z.infer<typeof loginFormSchema>;
 
@@ -23,10 +25,13 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const mutation = useMutation({
     mutationFn: loginApi,
     onSuccess:(data)=>{
         toast.success(data.message)
+        dispatch(setToken(data.token))
         router.push("/")
     },
     onError:(data)=>{

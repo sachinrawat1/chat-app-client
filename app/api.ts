@@ -2,7 +2,7 @@ import { loginFormSchema, registerFormSchema } from "@/lib/schema";
 import axios from "axios";
 import { z } from "zod";
 
-const baseUrl = "http://localhost:8000/apis/v1/";
+const baseUrl = "http://localhost:8080/apis/v1/";
 
 type registerBody = z.infer<typeof registerFormSchema>;
 type loginBody = z.infer<typeof loginFormSchema>;
